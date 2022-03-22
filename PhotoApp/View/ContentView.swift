@@ -13,18 +13,24 @@ struct ContentView: View {
 
     @FetchRequest(
         sortDescriptors: [
-            NSSortDescriptor(keyPath: \ImageStorage.savedImage, ascending: true),
-            NSSortDescriptor(keyPath: \ImageStorage.descriptions, ascending: true),
+            //NSSortDescriptor(keyPath: \ImageStorage.savedImage, ascending: true),
+            NSSortDescriptor(keyPath: \ImageStorage.descriptions, ascending: true)
         ],
         animation: .default)
     private var items: FetchedResults<ImageStorage>
     
     @State var show = false
+    var columns = [
+        GridItem(spacing: 0),
+        GridItem(spacing: 0)
+    ]
     
     var body: some View {
         NavigationView {
-            List {
+            ScrollView {
+                LazyVGrid(columns: columns) {
                 ForEach(items) { item in
+                    VStack {
                     if let data = item.savedImage,
                        let uiimage = UIImage(data: data) {
                         AnyView(Image(uiImage: uiimage)
@@ -44,8 +50,10 @@ struct ContentView: View {
 //                    } label: {
 //                        Text("\(item.descriptions!)")
 //                    }
+                    }
                 }
                 .onDelete(perform: deleteItems)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -59,6 +67,7 @@ struct ContentView: View {
                     })
                 }
             }
+            .navigationTitle("Gallery")
             .sheet(isPresented: $show) {
                 AddImageView().environment(\.managedObjectContext, self.viewContext)
             }
