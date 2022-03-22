@@ -85,6 +85,7 @@ extension AddImageView {
         let newItem = ImageStorage(context: viewContext)
         newItem.descriptions = descriptions
         newItem.savedImage = image
+        newItem.date = Date.now
         
         do {
             try viewContext.save()
