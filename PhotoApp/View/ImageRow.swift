@@ -15,7 +15,9 @@ struct ImageRow: View {
         if let photo = photo.savedImage {
             Image(uiImage: UIImage(data: photo) ?? UIImage())
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
+                .frame(width: (UIScreen.main.bounds.width) / 3, height: (UIScreen.main.bounds.width) / 3)
+                .clipped()
         }
     }
 }

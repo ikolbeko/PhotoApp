@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PhotoDetailView: View {
     
+    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.presentationMode) var presentationMode
+
     var items: FetchedResults<ImageStorage>
     @State var current: ImageStorage
     
@@ -27,6 +30,31 @@ struct PhotoDetailView: View {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
+        .toolbar {
+            ToolbarItem {
+                Button(action: {
+                    deleteItems(current)
+                }, label: {
+                    Image(systemName: "trash")
+                })
+            }
+        }
+    }
+}
+
+extension PhotoDetailView {
+    private func deleteItems(_ value: ImageStorage) {
+        withAnimation {
+            viewContext.delete(current)
+
+            do {
+                try viewContext.save()
+                presentationMode.wrappedValue.dismiss()
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
     }
 }
 
