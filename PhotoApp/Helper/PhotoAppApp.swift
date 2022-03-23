@@ -14,17 +14,17 @@ struct PhotoAppApp: App {
     
     var body: some Scene {
         
-        WindowGroup {
-                ContentView()
-                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-        }
-        
 //        WindowGroup {
-//            if data != nil {
-//                LoginView()
-//            } else {
-//                InitialView()
-//            }
+//                ContentView()
+//                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
 //        }
+        
+        WindowGroup {
+            if data != nil {
+                LoginView()
+            } else {
+                InitialView()
+            }
+        }
     }
 }
