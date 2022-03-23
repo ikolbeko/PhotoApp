@@ -11,11 +11,7 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
-        sortDescriptors: [
-            NSSortDescriptor(keyPath: \ImageStorage.date, ascending: true)
-        ],
-        animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \ImageStorage.date, ascending: true)],animation: .default)
     private var items: FetchedResults<ImageStorage>
     
     @State var show = false
@@ -36,12 +32,8 @@ struct ContentView: View {
                         }
                     }
                 }
-                //.onDelete(perform: deleteItems)
             }
             .toolbar {
-                //                ToolbarItem(placement: .navigationBarTrailing) {
-                //                    EditButton()
-                //                }
                 ToolbarItem {
                     Button(action: {
                         show.toggle()
@@ -58,13 +50,6 @@ struct ContentView: View {
         
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {

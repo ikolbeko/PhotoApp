@@ -12,7 +12,8 @@ struct AddImageView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode
     
-    @State var image: Data? = .init(count: 0)
+    @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    @State var image: UIImage?
     @State var descriptions = ""
     @State var show = false
     
@@ -20,34 +21,46 @@ struct AddImageView: View {
         NavigationView {
             VStack {
                 
-                // ImagePicker Button
-                if image?.count != 0 {
-                    Button {
-                        show.toggle()
-                    } label: {
-                        if let data = image,
-                           let uiimage = UIImage(data: data) {
-                            AnyView(Image(uiImage: uiimage)
-                                        .resizable()
-                                        .scaledToFit()
-                            )
+                ZStack {
+                    // Library & Camera Picker Button
+                    HStack {
+                        // From Camera
+                        if image == nil {
+                        Button {
+                            sourceType = .camera
+                            show.toggle()
+                        } label: {
+                            Image(systemName: "camera")
+                                .font(.system(size: 70))
+                                .padding(50)
                         }
-                        else {
-                            AnyView(EmptyView())
+                        
+                        // From Library
+                        Button {
+                            sourceType = .photoLibrary
+                            show.toggle()
+                        } label: {
+                            Image(systemName: "photo")
+                                .font(.system(size: 70))
+                                .padding(50)
                         }
                     }
-                } else {
+                    }
+                    // Image
                     Button {
                         show.toggle()
                     } label: {
-                        Image(systemName: "plus")
-                            .font(.system(size: 70))
-                            .padding(50)
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                        }
                     }
                 }
                 
                 // Description TextField
                 TextField("Description...", text: $descriptions)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
                 
@@ -55,11 +68,11 @@ struct AddImageView: View {
                 Button {
                     addItem()
                 } label: {
-                    if let image = image?.count {
+                    if image != nil {
                         Text("Add Image")
                             .padding()
-                            .foregroundColor((descriptions.count > 0 && image > 0) ? Color.white : Color.black)
-                            .background((descriptions.count > 0 && image > 0) ? Color.blue : Color.secondary)
+                            .foregroundColor((descriptions.count > 0) ? Color.white : Color.black)
+                            .background((descriptions.count > 0) ? Color.blue : Color.secondary)
                             .cornerRadius(20)
                     }
                 }
@@ -75,7 +88,7 @@ struct AddImageView: View {
             }
         }
         .sheet(isPresented: $show) {
-            ImagePicker(image: $image, show: $show)
+            ImagePicker(image: $image, show: $show, sourceType: sourceType)
         }
     }
 }
@@ -84,7 +97,7 @@ extension AddImageView {
     private func addItem() {
         let newItem = ImageStorage(context: viewContext)
         newItem.descriptions = descriptions
-        newItem.savedImage = image
+        newItem.savedImage = image?.jpegData(compressionQuality: 1)
         newItem.date = Date.now
         
         do {
@@ -92,8 +105,6 @@ extension AddImageView {
             presentationMode.wrappedValue.dismiss()
             descriptions = ""
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
