@@ -10,6 +10,7 @@
 		31260A3627E9E8AF004DD37A /* PhotoApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31260A3427E9E8AF004DD37A /* PhotoApp.xcdatamodeld */; };
 		3173BC3227EA488F00E0372B /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3173BC3127EA488F00E0372B /* PhotoDetailView.swift */; };
 		3173BC3427EA561D00E0372B /* ImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3173BC3327EA561D00E0372B /* ImageRow.swift */; };
+		3173BC3827EAD36100E0372B /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3173BC3727EAD36100E0372B /* CameraManager.swift */; };
 		317E73D427E9F28700FAF07E /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317E73D327E9F28700FAF07E /* KeyChainHelper.swift */; };
 		31D6DDBE27E9AD00000205E1 /* PhotoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D6DDBD27E9AD00000205E1 /* PhotoAppApp.swift */; };
 		31D6DDC027E9AD00000205E1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D6DDBF27E9AD00000205E1 /* ContentView.swift */; };
@@ -26,6 +27,7 @@
 		31260A3527E9E8AF004DD37A /* PhotoApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoApp.xcdatamodel; sourceTree = "<group>"; };
 		3173BC3127EA488F00E0372B /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
 		3173BC3327EA561D00E0372B /* ImageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
+		3173BC3727EAD36100E0372B /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		317E73D327E9F28700FAF07E /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
 		31D6DDBA27E9AD00000205E1 /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31D6DDBD27E9AD00000205E1 /* PhotoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAppApp.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				317E73D327E9F28700FAF07E /* KeyChainHelper.swift */,
 				31D6DDC627E9AD02000205E1 /* Persistence.swift */,
 				31D6DDD827E9B5A1000205E1 /* ImagePicker.swift */,
+				3173BC3727EAD36100E0372B /* CameraManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				31D6DDD727E9AE7E000205E1 /* AddImageView.swift in Sources */,
 				31D6DDC027E9AD00000205E1 /* ContentView.swift in Sources */,
 				3173BC3227EA488F00E0372B /* PhotoDetailView.swift in Sources */,
+				3173BC3827EAD36100E0372B /* CameraManager.swift in Sources */,
 				31D6DDBE27E9AD00000205E1 /* PhotoAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,7 +344,9 @@
 				DEVELOPMENT_TEAM = 452TX86ZYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need the camera permission";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera permission";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -371,7 +377,9 @@
 				DEVELOPMENT_TEAM = 452TX86ZYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need the camera permission";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera permission";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

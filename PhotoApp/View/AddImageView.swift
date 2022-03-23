@@ -12,6 +12,7 @@ struct AddImageView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode
     
+    @StateObject var cameraManager = CameraManager()
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State var image: UIImage?
     @State var descriptions = ""
@@ -25,16 +26,17 @@ struct AddImageView: View {
                     // Library & Camera Picker Button
                     HStack {
                         // From Camera
-                        if image == nil {
-                        Button {
-                            sourceType = .camera
-                            show.toggle()
-                        } label: {
-                            Image(systemName: "camera")
-                                .font(.system(size: 70))
-                                .padding(50)
+                        //if cameraManager.permissionGranted {
+                        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+                            Button {
+                                sourceType = .camera
+                                show.toggle()
+                            } label: {
+                                Image(systemName: "camera")
+                                    .font(.system(size: 70))
+                                    .padding(50)
+                            }
                         }
-                        
                         // From Library
                         Button {
                             sourceType = .photoLibrary
@@ -44,7 +46,7 @@ struct AddImageView: View {
                                 .font(.system(size: 70))
                                 .padding(50)
                         }
-                    }
+                        
                     }
                     // Image
                     Button {
@@ -88,7 +90,10 @@ struct AddImageView: View {
             }
         }
         .sheet(isPresented: $show) {
-            ImagePicker(image: $image, show: $show, sourceType: sourceType)
+            ImagePicker(image: $image, sourceType: sourceType)
+        }
+        .onAppear {
+            cameraManager.requestPermission()
         }
     }
 }
