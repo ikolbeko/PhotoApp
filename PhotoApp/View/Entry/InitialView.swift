@@ -11,7 +11,9 @@ struct InitialView: View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var confirm = false
-        
+    @State private var confirmText = LocalizedStringKey("invalid password")
+    @State private var showConfirmText = false
+    
     var body: some View {
         VStack {
             Text("Welcome! 🎉")
@@ -27,6 +29,9 @@ struct InitialView: View {
             SecureField("Confirm password..." ,text: $confirmPassword)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         
+            if showConfirmText {
+                Text(confirmText)
+            }
             // Set password button
             Button {
                 if password == confirmPassword && password != ""{
@@ -35,7 +40,7 @@ struct InitialView: View {
                     KeyChainHelper.standart.save(data, service: "app", account: "photoApp")
                     print(data)
                 } else {
-                    //confirmLabel = "invalid password"
+                    showConfirmText.toggle()
                 }
             } label: {
                 Text("Set password")

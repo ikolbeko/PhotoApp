@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  PhotoApp
+
+  Created by Илья Колбеко on 6.04.22.
+  
+*/
+
+// Initial View
+"Welcome! 🎉" = "Привет! 🎉";
+"You need a set password" = "Тебе надо придумать пароль";
+"Set password..." = "Установите пароль...";
+"Confirm password..." = "Подтвердите...";
+"invalid password" = "Неподходящий пароль";
+"Set password" = "Продолжить";
+
+// Login View
+"Enter password" = "Введите пароль";
+"password..." = "пароль...";
+"password incorrect" = "Неверный пароль";
+"Login" = "Войти";
+
+// Content View
+"Gallery" = "Галерея";
+
+// Add Image View
+"Add Image" = "Добавить";
+"Cancel" = "Назад";
+"Description..." = "Описание...";

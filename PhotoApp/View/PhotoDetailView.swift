@@ -24,8 +24,7 @@ struct PhotoDetailView: View {
                         Image(uiImage: UIImage(data: image) ?? UIImage())
                             .renderingMode(.original)
                             .resizable()
-                            .scaledToFill()
-                            .frame(width: (UIScreen.main.bounds.width - 32)/2, height: 250, alignment: .center)
+                            .scaledToFit()
                         
                         Text(descriptions)
                     }

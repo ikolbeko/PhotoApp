@@ -14,6 +14,7 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \ImageStorage.date, ascending: true)],animation: .default)
     private var items: FetchedResults<ImageStorage>
     
+    @State private var navigationText = LocalizedStringKey("Gallery")
     @State var show = false
     
     var columns = [
@@ -42,9 +43,9 @@ struct ContentView: View {
                     })
                 }
             }
-            .navigationTitle("Gallery")
+            .navigationTitle(navigationText)
             .sheet(isPresented: $show) {
-                AddImageView().environment(\.managedObjectContext, self.viewContext)
+                AddImageView(isPresented: $show).environment(\.managedObjectContext, self.viewContext)
             }
         }
         

@@ -10,13 +10,13 @@ import SwiftUI
 struct AddImageView: View {
     
     @Environment(\.managedObjectContext) var viewContext
-    @Environment(\.presentationMode) var presentationMode
     
     @StateObject var cameraManager = CameraManager()
     @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @State var image: UIImage?
     @State var descriptions = ""
     @State var show = false
+    @Binding var isPresented: Bool
     
     var body: some View {
         NavigationView {
@@ -24,40 +24,35 @@ struct AddImageView: View {
                 
                 ZStack {
                     // Library & Camera Picker Button
-                    HStack {
-                        // From Camera
-                        //if cameraManager.permissionGranted {
-                        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        HStack {
+                            // From Camera
+                            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+                                Button {
+                                    sourceType = .camera
+                                    show.toggle()
+                                } label: {
+                                    Image(systemName: "camera")
+                                        .font(.system(size: 70))
+                                        .padding(50)
+                                }
+                            }
+                            // From Library
                             Button {
-                                sourceType = .camera
+                                sourceType = .photoLibrary
                                 show.toggle()
                             } label: {
-                                Image(systemName: "camera")
+                                Image(systemName: "photo")
                                     .font(.system(size: 70))
                                     .padding(50)
                             }
                         }
-                        // From Library
-                        Button {
-                            sourceType = .photoLibrary
-                            show.toggle()
-                        } label: {
-                            Image(systemName: "photo")
-                                .font(.system(size: 70))
-                                .padding(50)
-                        }
-                        
                     }
-                    // Image
-                    Button {
-                        show.toggle()
-                    } label: {
-                        if let image = image {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                        }
-                    }
+                    
                 }
                 
                 // Description TextField
@@ -82,7 +77,7 @@ struct AddImageView: View {
             .toolbar {
                 ToolbarItem {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        isPresented.toggle()
                     }, label: {
                         Text("Cancel")
                     })
@@ -107,7 +102,7 @@ extension AddImageView {
         
         do {
             try viewContext.save()
-            presentationMode.wrappedValue.dismiss()
+            isPresented.toggle()
             descriptions = ""
         } catch {
             let nsError = error as NSError

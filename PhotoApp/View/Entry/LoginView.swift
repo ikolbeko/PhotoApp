@@ -11,8 +11,9 @@ struct LoginView: View {
     
     @State private var password = ""
     @State private var confirm = false
-    @State private var confirmLabel = ""
-    
+    @State private var confirmLabel = LocalizedStringKey("password incorrect")
+    @State private var showConfirmText = false
+
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, .white, .pink]),
@@ -26,7 +27,9 @@ struct LoginView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 
-                Text(confirmLabel)
+                if showConfirmText {
+                    Text(confirmLabel)
+                }
                 
                 Button {
                     let data = KeyChainHelper.standart.read(service: "app", account: "photoApp")!
@@ -34,7 +37,7 @@ struct LoginView: View {
                     if password == accessToken {
                         confirm = true
                     } else {
-                        confirmLabel = "invalid password"
+                        showConfirmText.toggle()
                     }
                 } label: {
                     Text("Login")
