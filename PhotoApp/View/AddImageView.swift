@@ -85,7 +85,7 @@ struct AddImageView: View {
             }
         }
         .sheet(isPresented: $show) {
-            ImagePicker(image: $image, sourceType: sourceType)
+            ImagePicker(isPresented: $show, image: $image, sourceType: $sourceType)
         }
         .onAppear {
             cameraManager.requestPermission()
